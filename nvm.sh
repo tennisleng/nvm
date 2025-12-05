@@ -4088,6 +4088,12 @@ nvm() {
       local NVM_NO_COLORS
       local NVM_NO_ALIAS
 
+      # Automatically disable colors when output is not a TTY (e.g., piped)
+      # See: https://github.com/nvm-sh/nvm/issues/2497
+      if ! [ -t 1 ]; then
+        NVM_NO_COLORS="--no-colors"
+      fi
+
       while [ $# -gt 0 ]; do
         case "${1}" in
           --) ;;
